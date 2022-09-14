@@ -2,3 +2,20 @@ baseURL = 'https://initialed85.github.io/'
 languageCode = 'en-au'
 title = "initialed85's misc tech stuff"
 theme = "PaperMod"
+
+[params]
+author = 'Edward Beech'
+keywords = ['personal', 'tech', 'blog']
+ShowReadingTime = true
+ShowCodeCopyButtons = true
+
+[params.homeInfoParams]
+Content = """Disorganised tech-related thoughts from a Perth-based software developer"""
+
+[params.socialIcons.0]
+name = "GitHub"
+url = "https://github.com/initialed85/"
+
+[params.socialIcons.1]
+name = "LinkedIn"
+url = "https://www.linkedin.com/in/edward-beech-48442a74/"
