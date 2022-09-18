@@ -4,8 +4,6 @@ date: 2022-09-18T12:43:02+08:00
 draft: false
 ---
 
-## Context
-
 I've been working on a personal project called [Dinosaur](https://github.com/initialed85/dinosaur); it's a single-page application that
 presents the user with two horizontal panes- a code editor in the language of your choice and a live feed to your code being executed.
 
@@ -20,7 +18,8 @@ Languages presently supported are:
 - TypeScript
 
 Initially this sounds a bit like any of the various coding games / exercises out there but I've chosen to add what I think is a slight
-difference in that all user sessions have network stack access to the same network as all other user sessions.
+variation in that all user sessions have network stack access to the same network as all other user sessions (in time I'll probably permit
+this to be broken up into groups, permitting isolated group sessions).
 
 You can access a running instance of it at [dinosaur.initialed85.cc](https://dinosaur.initialed85.cc/); have a play, see if you can break
 it, feel free to exploit any glaring security holes I've missed.
@@ -30,7 +29,7 @@ other folks have already built.
 
 ## Rationale
 
-The idea for this came about as part of ongoing friendly arguments at work that sees our team of developers divided into two camps:
+The idea for this came about as part of an ongoing friendly argument at work that sees our team of developers divided into two camps:
 
 - The new, sharp developers that are masters of the clever features built into their IDEs
 - The old, decaying "dinosaur" developers that are scared by clever features and use their IDEs more like an editor
@@ -40,7 +39,7 @@ velocity while those of us in the old camp waste time reading and understanding 
 long-winded [Bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) commands to achieve what the UI can do in mere seconds.
 
 As with a lot of these arguments, neither party is absolutely correct, each simply gravitates towards one end of the spectrum as a
-preference because it most gels with their way of thinking.
+preference because it most gels with the way they work.
 
 Probably if we were to be objective and pragmatic, a good developer would have a functional degree of mastery over both approaches thus
 maximising the tools available to them.
@@ -80,7 +79,7 @@ Here's a quick summary of the different technologies in there:
     - Selected because it made an otherwise detailed problem extremely easy
     - Used to manage the "filesystem change-driven build and run" loop for a user session
 
-## Reducing exploitability
+## Lowering risk of exploitation
 
 Given I haven't (as yet) hidden this thing behind any sort of social sign-in and have no other smarts to limit access, I wanted to try and
 reduce the amount the system could be exploited (e.g. as part of a botnet or who knows what).
@@ -99,16 +98,16 @@ somebody tries to cripple the system with some really CPU or RAM hungry code.
 ## Approach for supported languages
 
 I struggle with motivation for all of my personal projects because they often don't really serve any useful purpose; this is well evidenced
-by piecemeal home-automation-centric projects:
+by my piecemeal home-automation-centric projects:
 
 - [cameranator](https://github.com/initialed85/cameranator)
-    - Home-grown CCTV motion event and segment recording system
+    - Home-grown CCTV motion detection and segment recording system
 - [mqtt_things](https://github.com/initialed85/mqtt_things)
     - Some hacking to expose a few things via MQTT
 - [zmote](https://github.com/initialed85/zmote)
     - A Python library for somebody else's low-volume-produced WiFi IR blaster
 
-All of them sort of work, all of them are still sort of used and none of them are complete or well tested.
+They all kinda work, they're all kinda used and none of them are reliable or complete or well tested.
 
 This project has managed to keep me on the hook for a while because I get to play with a bunch of languages that I almost never used / had
 previously never used; this has come about because (at least for now) easy supported language comes with a minimal template that does the
@@ -116,7 +115,7 @@ following:
 
 - Open a UDP socket
 - Send a 1 Hz (ish) heartbeat as a broadcast announcing itself in the main thread
-- Receive broadcasted heartbeats from other user session using a background thread
+- Receive broadcast heartbeats from other user session using a background thread
 
 This sounds pretty minimal, but it's touching a few key concepts for each language that take you beyond simple things like using variables
 and functions and printing output.
@@ -133,7 +132,7 @@ Because I don't know what I'm doing, my template may for sure have issues; for e
 
 I'm pretty comfortable with Go both personally and professionally, but my approach
 to [polyglotism](https://en.wikipedia.org/wiki/Polyglot_(computing)) is quite naive and reflects my lack of detail in that I tend to
-write one language much like I write another in sort of a "lowest common denominator" approach (and as such I'm rarely maximising the full
+write one language much like I write another with sort of a "lowest common denominator" approach (and as such I'm rarely maximising the full
 features of a language).
 
 For example a serious Go coder would probably have channels in front of the socket.
@@ -143,38 +142,43 @@ For example a serious Go coder would probably have channels in front of the sock
 Java is like C for me; I've done very little of it personally and professionally, I was once taught it and deemed competent but I've
 forgotten basically all of that.
 
-Interesting, it seems to be the heaviest when running the template code- could be a byproduct of my lack of understanding on the correct way
-to write Java.
+Interestingly, it seems to be the heaviest when running the template code- could be a byproduct of my lack of understanding on the correct
+way to write Java.
+
+Practically it's quite verbose and while not really apparent with the small bit of template code for this project, it seems like it can be
+quite an art to juggle JRE and various other dependencies.
 
 ### Lua
 
-I had to add Lua because my Dad (a C coder from way back) constantly bangs on about it; we'd had many light arguments about I thought Lua
-was garbage (based on a brochure review and no practical experience) and so I had to get some real experience with it.
+I added Lua because my Dad (a C coder from way back) constantly bangs on about it; we've had many light arguments about wherein I suggest
+Lua is garbage (based on a brochure review and no practical experience) and so I needed to get some real experience with it.
 
 As far as I can tell:
 
 - Integrates well with C
 - Has next to no standard library
-- Has no support for threads (just coroutines and you need to write your own dispatcher)
-- The C-to-Lua interface (stack-based) needs care when achieving function interfaces because you just push variables onto the stack (making
-  it real easy to build an inconsistent returned interface for your varying code paths within a function)
+- Has no built-in support for sockets (need external `luasocket` library)
+- Has no built-in support for threads (just coroutines and you need to write your own dispatcher)
+- The C-to-Lua interface (stack-based) needs care when achieving function interfaces because you just push values onto a stack (making
+  it real easy to build an inconsistent returned interface for your varying code paths within a function); `luasocket` is an example of this
+  causing bad interfaces
 
 ### Python
 
-I'm very comfortable with Python, it's the language that I've done most of my professional coding with; however as with Go, the way I write
-it is probably not how a pure Pythonista would.
+I'm pretty comfortable with Python, it's the language that I've done most of my professional coding with; however as with Go, the way I
+write it is probably not as Pythonic as a serious Python developer.
 
 ### Rust
 
 I have written almost zero Rust and I would absolutely love to write more (I just don't have an excuse, or didn't, until now).
 
-It looks like it has an incredibly steep learning curve but for how low-level it is (I guess it feels like a competitor to C) it can be
-impressively terse.
+It looks like it has an incredibly steep learning curve but despite how low-level it is (it feels like it's trying to solve the same problem
+as C) it can be impressively terse.
 
 This is the language I will be trying to learn the most about in the near future.
 
-Simply getting the template code for this project to share a socket safely between the main thread and the background thread took me days;
-the takeway ended up being this:
+Simply getting the template code for this project to share a socket safely (at least as far as the borrow-checker is concerned) between the
+main thread and the background thread took me days; the takeaways ended up being this:
 
 ```rust
 // wrap a socket in an atomic reference counter; note the cool error handling
@@ -193,7 +197,7 @@ format!("{}:{}", broadcast_ip, PORT),
 ).expect("failed to send to socket");
 ```
 
-Exceptional.
+Apparently with this we can have faith that when everyone is finished using despite rust not having a garbage collector per se- exceptional!
 
 ### TypeScript
 
@@ -202,4 +206,6 @@ best include it.
 
 Without question, it is super terse and that probably helps you get services up and running from nothing quite quickly.
 
-I don't really like it, no strong arguments as to why lol.
+I don't really like it- I had to hack more environment / dependency stuff in to get the TypeScript template working than I did for the other
+languages; maybe it's okay if you're comfortable with it, but it feels like there's almost as much "fluff" around the edges of actually
+achieving anything as Java (environment-wise).

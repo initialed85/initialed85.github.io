@@ -4,8 +4,6 @@ date: 2022-09-13T20:31:01+08:00
 draft: false
 ---
 
-## Context
-
 At my day job my colleagues and I develop a [data gathering and visualisation platform](https://www.ftpsolutions.com.au/products/ims/) that
 has a fair bit of [Python](https://www.python.org/) behind the scenes.
 
@@ -17,9 +15,9 @@ dependencies (usually [Docker](https://www.docker.com/) containers) and then exe
 
 ## Problem
 
-My interest was piqued by one of my colleagues trying to understand why a
-particular long-running  [end-to-end test](https://www.testim.io/blog/end-to-end-testing-guide/) had suddenly started failing part-way
-through with seemingly no relevant changes to any nearby code.
+My interest was piqued by one of my colleagues trying to understand why a particular
+long-running  [end-to-end test](https://www.testim.io/blog/end-to-end-testing-guide/) had suddenly started failing part-way through with
+seemingly no relevant changes to any nearby code.
 
 TeamCity gave us some clear information as to when the trouble started:
 
@@ -42,8 +40,8 @@ Leaning on some prior knowledge, I'm reasonably confident of the following:
 - The [stdout](https://en.wikipedia.org/wiki/Standard_streams#Standard_output_(stdout)) of a process will read `Killed` when some other
   process kills a process (such as the [kill](https://man7.org/linux/man-pages/man2/kill.2.html) command)
     - This was observed in the build log
-- TeamCity will show related `stop` and possible `kill` Docker events preceding a `die` Docker event if the container was request to stop (
-  such as using the [docker stop](https://docs.docker.com/engine/reference/commandline/stop/) command)
+- TeamCity will show related `stop` and possible `kill` Docker events preceding a `die` Docker event if the container was requested to stop
+  (such as using the [docker stop](https://docs.docker.com/engine/reference/commandline/stop/) command)
     - This _was not_ observed in the build log
 
 When things get killed at random, my mind immediately goes to
@@ -153,6 +151,14 @@ of [serialisation of data between Go and Python](https://github.com/ftpsolutions
 And the summary reflects far less memory usage:
 
 ![Image 9](/posts/first-post/image-9.png)
+
+## Catalyst
+
+The reason this suddenly became a problem was a result of the CI improvements I spoke of earlier; we're in the process of breaking out one
+very large TeamCity runner VM into several smaller VMs (to try to prove a hypothesis that the QEMU virtualization is slow for storage).
+
+So practically the RAM ceiling was dropped such that this memory leak became problematic (rather than just being absorbed as it had been for
+a long time).
 
 ## Resolution
 
