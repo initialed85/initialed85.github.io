@@ -4,7 +4,7 @@ date: 2022-09-13T20:31:01+08:00
 draft: false
 ---
 
-**Context**
+## Context
 
 At my day job my colleagues and I develop a [data gathering and visualisation platform](https://www.ftpsolutions.com.au/products/ims/) that
 has a fair bit of [Python](https://www.python.org/) behind the scenes.
@@ -15,7 +15,7 @@ of [TeamCity](https://www.jetbrains.com/teamcity/).
 A test run involves TeamCity executing a [bash](https://www.gnu.org/software/bash/) script responsible for setting up any test
 dependencies (usually [Docker](https://www.docker.com/) containers) and then executing the test itself (also usually a Docker container).
 
-**Problem**
+## Problem
 
 My interest was piqued by one of my colleagues trying to understand why a
 particular long-running  [end-to-end test](https://www.testim.io/blog/end-to-end-testing-guide/) had suddenly started failing part-way
@@ -35,7 +35,7 @@ suddenly:
 
 ![Image 3](/posts/first-post/image-3.png)
 
-**First thoughts**
+## First thoughts
 
 Leaning on some prior knowledge, I'm reasonably confident of the following:
 
@@ -54,7 +54,7 @@ Processes running inside Docker containers on Linux are [namespaced](https://en.
 like isolation to the process in question; to the OOM Killer though, a process is just a process and if it's using too much memory it's
 going to get killed to save the system.
 
-**Digging deeper**
+## Digging deeper
 
 Unfortunately the TeamCity runner VMs had all been rebooted (redeployed in fact) since the last failing test run as part of some ongoing
 improvements to our [CI](https://en.wikipedia.org/wiki/Continuous_integration) system and so any
@@ -76,7 +76,7 @@ You'll have to trust me on this next statement as I didn't grab a screenshot: th
 depending on the amount of memory needed and the amount our test was likely to be affected by bad performance, having swap configured could
 potentially absorb memory leaks and permit our test to pass.
 
-**Recreating the problem**
+## Recreating the problem
 
 With a strong hypothesis formed, it's time to set about proving it- not wanting to spend much effort on potentially throwaway scaffolding, I
 decided just to run the test locally (in Docker, but for macOS) and just watch its memory usage in the meantime.
@@ -128,7 +128,7 @@ that `pytest` [keeps tracks of all Python loggers](https://docs.pytest.org/en/7.
 their messages in the test output (something I've intentionally disabled before in favour of live-logging to get context on long-running
 tests)- could it be that the sheer volume of log messages and the extended duration of the tests is using up all the RAM?
 
-**Testing the hypothesis**
+## Testing the hypothesis
 
 This is simple enough- we just have to re-run the test with the log capturing disabled (you probably don't need all of these flags, but my
 initial attempts with just `--capture=no` didn't work so I went scorched earth with the flags):
@@ -154,7 +154,7 @@ And the summary reflects far less memory usage:
 
 ![Image 9](/posts/first-post/image-9.png)
 
-**Resolution**
+## Resolution
 
 With a pretty clear cut smoking gun, we can set about fixing the problem; here are a few options available:
 
