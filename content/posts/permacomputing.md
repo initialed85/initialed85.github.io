@@ -739,7 +739,7 @@ I'll migrate the other stuff over in the coming weeks, if I come across anything
 
 Probable road map stuff:
 
-- I'd like to try to deploy a master-master Postgres cluster
+- I'd like to try to deploy a multi-master Postgres cluster
     - I'll move the Cameranator DB over to it
     - I'll probably also move Home Assistant over to it
 - I guess I should have some IaC
