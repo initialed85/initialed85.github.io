@@ -14,3 +14,17 @@ This is the source for my tech blog; you can view it at [initialed85.cc](https:/
     - [GitHub Pages](https://pages.github.com/)
 - Content Delivery Network
     - [CloudFlare](https://www.cloudflare.com/en-au/)
+
+## Usage
+
+To make a new article:
+
+```shell
+hugo new posts/some-post-name.md 
+```
+
+To run Hugo for local article development:
+
+```shell
+hugo server --buildDrafts --disableFastRender
+```
