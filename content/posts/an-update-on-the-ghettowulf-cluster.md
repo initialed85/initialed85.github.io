@@ -1,5 +1,5 @@
 ---
-title: "An Update on the Ghettowulf Cluster"
+title: "An update on the Ghettowulf Cluster"
 date: 2022-12-20T15:49:42+08:00
 draft: false
 ---
@@ -46,8 +46,8 @@ CCTV footage and some scanned documents that only needed to live long enough to 
 ### Swap configuration
 
 If you're a Kubernetes OG you may be of the mindset that
-a [Kube node should not have swap enabled](https://github.com/kubernetes/kubernetes/issues/53533#issuecomment-334947625) thus
-empowering [node-pressure eviction based on `MemoryPressure`](https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/#node-conditions)
+a [Kube node should not have swap configured](https://github.com/kubernetes/kubernetes/issues/53533#issuecomment-334947625) thus
+enabling [node-pressure eviction based on `MemoryPressure`](https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/#node-conditions)
 and then all of your [ridiculously vendor-locked automation](https://docs.aws.amazon.com/cdk/index.html) can spin you
 up [a new Kube node](https://docs.aws.amazon.com/eks/index.html) faster than you can say "credit card".
 
