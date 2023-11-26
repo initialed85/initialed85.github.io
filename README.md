@@ -17,6 +17,12 @@ This is the source for my tech blog; you can view it at [initialed85.cc](https:/
 
 ## Usage
 
+If you're cloning this repo for the first time, ensure to clone the submodules:
+
+```shell
+git clone git@github.com:initialed85/initialed85.github.io.git --recurse-submodules
+```
+
 To make a new article:
 
 ```shell
