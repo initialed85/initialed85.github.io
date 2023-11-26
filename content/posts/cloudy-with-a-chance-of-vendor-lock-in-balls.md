@@ -1,7 +1,7 @@
 ---
 title: "Cloudy with a chance of vendor lock-in balls"
 date: 2023-05-06T17:38:34+08:00
-draft: true
+draft: false
 ---
 
 I started writing this article before I changed jobs, which was basically 6 months ago (in May 2023).
