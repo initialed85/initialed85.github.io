@@ -4,7 +4,7 @@ date: 2024-03-16T17:16:59+08:00
 draft: false
 ---
 
-My son August (Augie to us, he's almost 4) always loved Lego (well, Duplo).
+My son August (Augie to us, he's almost 4) has always loved Lego (well, Duplo).
 
 For the longest time he'd build really long rectangular trucks, he seemed to like getting every block packed in tightly on the tray / trailer(s) of the truck.
 
