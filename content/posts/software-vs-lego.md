@@ -22,13 +22,13 @@ I usually try to help him out and explain that he needs to repurpose some of his
 
 We've only got a finite number of blocks, so there's a practical limit to the amount of complicated structure you can have and it's heavily affected by the amount of reinforcement you use along the way.
 
-If you don't reinforce things at all, you can use all of your blocks to build a cool structure- but probably they'll collapse, especially the moment you try to interact with them.
+If you don't reinforce things at all, you can use all of your blocks to build a cool structure- but probably it'll collapse, especially the moment you try to interact with it.
 
-On the flipside, if you over-reinforce things then your structure may not be cool at all, despite being extremely solid- this doesn't help us either, because now they're no fun to interact with.
+On the flipside, if you over-reinforce things then your structure may not be cool at all, despite being extremely solid- this doesn't help us either, because now it's no fun to interact with.
 
 # The comparison
 
-Let's propose some rough counterparts between this Lego situation and software that represents a Minimal Viable Product.
+Let's propose some rough counterparts between this Lego situation and building a software MVP.
 
 ## The box of Legos
 
@@ -56,7 +56,7 @@ These concepts don't individually map to aspects of playing with Lego, rather th
 
 ## The structure we build
 
-This is of course our product.
+This is of course our product:
 
 -   How many features do we have (e.g. individual user-facing parts of our system)?
 -   How deep / detailed are the features (e.g. complexities within one of these user-facing parts)?
@@ -76,7 +76,7 @@ Within reason, none of the above points on their own are anything to be concerne
 
 ## The time spent playing with the structure
 
-This represents our desired users using our product.
+This represents our desired users using our product:
 
 -   Did we get any actual users?
 -   Is it a good user experience?
