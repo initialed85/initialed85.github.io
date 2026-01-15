@@ -178,13 +178,14 @@ In a utopian world, I'd be using a single DNS provider and running nice short TT
 
 In reality, my DNS entries were spread across AWS Route 53 (sometimes with a nice low TTL) and Office 365 DNS (with the lowest configurable TTL of 30 minutes).
 
-Even worse than all that though, the charging stations a broad mixture of different vendors, some seem to be Linux-based and some seem to be more
-microcontroller-y; this means there's not really any consistency of behaviour across charging stations and vastly different network stack implementations.
+Even worse than all that though, the charging stations are a broad mixture of different vendors, some seem to be Linux-based and some seem to be more
+microcontroller-like, I've seen hints of Python libs, C++ libs, Java libs, ESP32 and more in the HTTP agents; this means there's not really any consistency
+of behaviour across charging stations and vastly different network stack implementations.
 
 On thinking through how things would play out, I came up with a few points to keep in my mind:
 
 - Even with low DNS TTLs, we can't be sure that the individual devices don't cache entries for longer than the TTL
-- Even devices if do honour TTLs properly, we're talking about a long-lived WebSocket connection
+- Even if devices do honour TTLs properly, we're talking about a long-lived WebSocket connection
 - Without breaking the WebSocket connection, the device is likely to remain connected to whatever IP the DNS entry resolved to for a very long time
 - Even if we break the WebSocket connection, we can't be sure that the device's retry loop doesn't simply reconnect to the IP it was already connected to
 
@@ -199,22 +200,21 @@ This sounds a bit daunting, but all it actually meant was adding a step to our m
   - Spin up the stateless services (request handlers and the like) in the new cloud
   - Repoint DNS so that the new cloud is handling requests
   - Spin down stateful services in the old cloud and spin them up in the new cloud
-  - **Repoint the Kubernetes Service abstraction in AWS EKS to point to the equivalent Kubernetes Service abstraction in AWS GCP**
-    - So now anyone still connected via AWS EKS would have an extra hop on their path to the newly promoted GCP system
+  - *Repoint the Kubernetes Service abstraction in AWS EKS to point to the equivalent Kubernetes Service abstraction in AWS GCP*
   - Promote the Cloud SQL replica to master and repoint the services to that database
 
 ### Wrapping it all up
 
 With the plan in place, I did a bunch more experimentation; soaking a free-standing non-prod instance of the system in GCP for a long time to see what I learned about the
-differences of GCP / GKE Autopilot (nothing notable, it's pretty good), executing in entirety the migration process (but for non-prod).
+differences of GCP / GKE Autopilot (nothing notable, it's pretty good), executing in entirety the migration process (but for non-prod), trying out rolling back half-way etc.
 
 Feeling pretty confident, we scheduled the migration and went ahead with it- it was myself driving with my [right-hand man](https://www.linkedin.com/in/janmayp) assisting
 and frankly it was quite uneventful.
 
-We followed the plan, got everything running over in GCP, saw that some charging stations were quick to connect to GCP and saw that as feared, some remained connected to AWS
-and when the sun came up, it was all still operating and we were able to serve the usual rush of users charging their EVs as they parked them for work that day.
+We followed the plan, got everything running over in GCP, saw that some charging stations were quick to connect to GCP and saw that as feared, some remained connected to AWS-
+but when the sun came up, it was all still operating and we were able to serve the usual rush of users charging their EVs as they parked them for work that day.
 
 And that's about all I can remember- if the blog post feels different for the last couple of sections that's because they were added 18 months later, lol.
 
 I'm gonna write more stuff soon I promise; I've got another good blog post on Quake 1 coming in the context of not being happy about using other folks ports and wanting to
-make my own (which I did, I'm excited to write about it- I just gotta you know, actually do it).
+make my own (which I did, I'm excited to write about it- just gotta make myself start writing).
