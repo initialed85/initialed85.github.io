@@ -10,6 +10,7 @@ keywords = ['personal', 'tech', 'blog']
 ShowReadingTime = true
 ShowCodeCopyButtons = true
 comments = true
+social = true
 
 [params.homeInfoParams]
 Content = """Disorganised tech-related thoughts from a Perth-based software developer"""
