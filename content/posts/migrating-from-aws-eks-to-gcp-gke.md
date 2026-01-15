@@ -1,7 +1,7 @@
 ---
 title: "Migrating From AWS EKS to GCP GKE"
 date: 2024-06-25T14:03:20+08:00
-draft: true
+draft: false
 ---
 
 NOTE: I started writing this article in June 2024 and then got busy; it's now January 2026... it's becoming a bit of a pattern.
