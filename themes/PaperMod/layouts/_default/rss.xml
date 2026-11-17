@@ -1,3 +1,18 @@
+{{/* Hugo >= v0.156 removed .Site.Author; derive from site.Params.author instead */}}
+{{- $authorEmail := "" -}}
+{{- with site.Params.author -}}
+  {{- if reflect.IsMap . -}}
+    {{- with .email }}{{ $authorEmail = . }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- $authorName := "" -}}
+{{- with site.Params.author -}}
+  {{- if reflect.IsMap . -}}
+    {{- with .name }}{{ $authorName = . }}{{ end -}}
+  {{- else -}}
+    {{- $authorName = . -}}
+  {{- end -}}
+{{- end -}}
 {{- $pctx := . -}}
 {{- if .IsHome -}}{{ $pctx = site }}{{- end -}}
 {{- $pages := slice -}}
@@ -23,10 +38,10 @@
       <link>{{ index . 0 | absURL }}</link>
     </image>
     {{- end }}
-    <generator>Hugo -- gohugo.io</generator>{{ with site.LanguageCode }}
-    <language>{{.}}</language>{{end}}{{ with site.Author.email }}
-    <managingEditor>{{.}}{{ with site.Author.name }} ({{.}}){{end}}</managingEditor>{{end}}{{ with site.Author.email }}
-    <webMaster>{{.}}{{ with site.Author.name }} ({{.}}){{end}}</webMaster>{{end}}{{ with site.Copyright }}
+    <generator>Hugo -- gohugo.io</generator>{{ with site.Language.Locale }}
+    <language>{{.}}</language>{{end}}{{ with $authorEmail }}
+    <managingEditor>{{.}}{{ with $authorName }} ({{.}}){{end}}</managingEditor>{{end}}{{ with $authorEmail }}
+    <webMaster>{{.}}{{ with $authorName }} ({{.}}){{end}}</webMaster>{{end}}{{ with site.Copyright }}
     <copyright>{{.}}</copyright>{{end}}{{ if not .Date.IsZero }}
     <lastBuildDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>{{ end }}
     {{- with .OutputFormats.Get "RSS" -}}
@@ -38,7 +53,7 @@
       <title>{{ .Title }}</title>
       <link>{{ .Permalink }}</link>
       <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
-      {{ with site.Author.email }}<author>{{.}}{{ with site.Author.name }} ({{.}}){{end}}</author>{{end}}
+      {{ with $authorEmail }}<author>{{.}}{{ with $authorName }} ({{.}}){{end}}</author>{{end}}
       <guid>{{ .Permalink }}</guid>
       <description>{{ with .Description | html }}{{ . }}{{ else }}{{ .Summary | html }}{{ end -}}</description>
       {{- if site.Params.ShowFullTextinRSS }}
