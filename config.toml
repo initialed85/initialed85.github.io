@@ -22,3 +22,6 @@ url = "https://github.com/initialed85/"
 [params.socialIcons.1]
 name = "LinkedIn"
 url = "https://www.linkedin.com/in/edward-beech-48442a74/"
+
+[pagination]
+pagerSize = 50

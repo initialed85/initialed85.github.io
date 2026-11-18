@@ -1,0 +1,7 @@
+.post-content img {
+  width: 80vw;          /* 90% of the viewport width */
+  max-width: 1024px;    /* Optional cap so it doesn't get too huge on ultrawide monitors */
+  margin-left: 50%;
+  transform: translateX(-50%);
+  height: auto;
+}
