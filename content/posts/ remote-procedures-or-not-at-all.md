@@ -10,8 +10,9 @@ Anything from fleet management databases, APIs, solar controllers and other powe
 
 There are a lot of things to scrape per customer instance and a lot of different supported integrations.
 
-For better or worse, Python is the language that does a lot of the scraping work- partially because when we started out and it was just me, the (now) CTO and one of the other founders, Python was
-the only language I was halfway competent in (having done a fair bit of it while working at a mining company prior).
+For better or worse, Python is the language that does a lot of the scraping work- partially because when we started out and it was just me, the
+[(now) CTO](https://www.linkedin.com/in/scott-mills-4078655b/) and one of the other founders, Python was the only language I was halfway competent in (having done a fair bit of it
+while working at a mining company prior).
 
 # Learning on the job
 
